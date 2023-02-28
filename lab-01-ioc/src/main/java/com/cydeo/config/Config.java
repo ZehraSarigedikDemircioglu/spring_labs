@@ -20,7 +20,6 @@ public class Config {
         currency.setCode("code");
         return currency;
     }
-
     @Bean
     public Current current(){
         Current current = new Current();

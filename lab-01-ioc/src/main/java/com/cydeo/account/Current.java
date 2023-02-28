@@ -9,7 +9,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Current {
-
     private Currency currency;
     private BigDecimal amount;
     private UUID accountId;
