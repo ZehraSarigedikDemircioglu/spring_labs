@@ -19,13 +19,13 @@ public class BalanceService {
         BigDecimal customerBalanceAmount = customerBalance.getAmount();
 
         return customerBalanceAmount.subtract(checkoutAmount)
-                .compareTo(BigDecimal.ZERO) > 0;
+                .compareTo(BigDecimal.ZERO) >= 0;
     }
 
     public boolean checkoutFromGiftBalance(BigDecimal checkoutAmount){
         BigDecimal giftCardBalanceAmount = giftCardBalance.getAmount();
 
         return giftCardBalanceAmount.subtract(checkoutAmount)
-                .compareTo(BigDecimal.ZERO) > 0;
+                .compareTo(BigDecimal.ZERO) >= 0;
     }
 }

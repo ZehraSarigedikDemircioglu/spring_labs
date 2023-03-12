@@ -7,6 +7,6 @@ public class BalanceManager {
     public boolean checkout(BigDecimal checkoutAmount, Balance balance){
 
         return balance.getAmount().subtract(checkoutAmount)
-                .compareTo(BigDecimal.ZERO) > 0;
+                .compareTo(BigDecimal.ZERO) >= 0;
     }
 }
