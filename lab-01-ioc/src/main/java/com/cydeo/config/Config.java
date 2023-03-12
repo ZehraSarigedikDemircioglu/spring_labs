@@ -5,7 +5,6 @@ import com.cydeo.account.Current;
 import com.cydeo.account.Saving;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -26,6 +25,7 @@ public class Config {
         current.setAccountId(UUID.randomUUID());
         current.setCurrency(currency());
         current.setAmount(BigDecimal.valueOf(235.7));
+//        current.setAmount(new BigDecimal(235.7)); // line 28 and 29 are same
         return current;
     }
     @Bean
