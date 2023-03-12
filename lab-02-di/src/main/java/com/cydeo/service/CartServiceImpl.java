@@ -17,8 +17,8 @@ import java.util.Map;
 @Component
 public class CartServiceImpl implements CartService{
 
-    private CartRepository cartRepository;
-    private StockService service;
+    private final CartRepository cartRepository;
+    private final StockService service;  // to make as final if we do not add constructor, it will give me warn
 
     public Cart addCart(Product product, int quantity) {
         boolean stockAvailable = service.checkStockIsAvailable(product, quantity);
