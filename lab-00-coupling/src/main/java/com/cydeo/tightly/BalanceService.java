@@ -27,6 +27,5 @@ public class BalanceService {
 
         return giftCardBalanceAmount.subtract(checkoutAmount)
                 .compareTo(BigDecimal.ZERO) >= 0;
-
     }
 }

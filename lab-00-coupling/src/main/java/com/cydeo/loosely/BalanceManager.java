@@ -8,6 +8,5 @@ public class BalanceManager {
 
         return balance.getAmount().subtract(checkoutAmount)
                 .compareTo(BigDecimal.ZERO) >= 0;
-
     }
 }
