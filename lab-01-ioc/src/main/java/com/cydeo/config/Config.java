@@ -25,8 +25,9 @@ public class Config {
         current.setAccountId(UUID.randomUUID());
         current.setCurrency(currency());
         current.setAmount(BigDecimal.valueOf(235.7));
-//        current.setAmount(new BigDecimal(235.7)); // line 28 and 29 are same
+//        current.setAmount(new BigDecimal(235.7)); // line 27 and 28 are same
         return current;
+
     }
     @Bean
     public Saving saving(){
