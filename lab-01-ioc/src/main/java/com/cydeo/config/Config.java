@@ -27,7 +27,6 @@ public class Config {
         current.setAmount(BigDecimal.valueOf(235.7));
 //        current.setAmount(new BigDecimal(235.7)); // line 27 and 28 are same
         return current;
-
     }
     @Bean
     public Saving saving(){
