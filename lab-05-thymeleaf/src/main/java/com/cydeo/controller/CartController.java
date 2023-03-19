@@ -1,46 +1,43 @@
 package com.cydeo.controller;
 
 import com.cydeo.service.CartService;
-import com.cydeo.service.ProductService;
-import com.cydeo.service.impl.CartServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
+
+import static com.cydeo.service.impl.CartServiceImpl.CART;
 
 
 @Controller
 public class CartController {
     private final CartService cartService;
-    private final ProductService productService;
 
-    public CartController(CartService cartService, ProductService productService) {
+    public CartController(CartService cartService) {
         this.cartService = cartService;
-        this.productService = productService;
     }
 
     @GetMapping("/cart")
     public String getCart(Model model) {
-        model.addAttribute("cartList", CartServiceImpl.CART.getCartItemList());
+        model.addAttribute("cart", CART);
         return "cart/show-cart";
     }
 
     @GetMapping("/addToCart/{id}/{quantity}")
-    public String addToCart(@PathVariable UUID id, @PathVariable Integer quantity, Model model) {
+    public String addToCart(@PathVariable("id") UUID id, @PathVariable("quantity") Integer quantity) {
 
         cartService.addToCart(id, quantity);
 
-        return "product/list";
+        return "redirect:/cart";
     }
 
-    @GetMapping("/addToCart/{id}")
-    public String deleteFromCart(@PathVariable UUID id, Model model) {
+    @GetMapping("/delete/{id}")
+    public String deleteFromCart(@PathVariable UUID id) {
         cartService.deleteFromCart(id);
 
-        return "cart/show-cart";
+        return "redirect:/cart";
     }
 
 }
