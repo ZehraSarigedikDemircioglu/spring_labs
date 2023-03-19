@@ -26,7 +26,7 @@ public class CartController {
     }
 
     @GetMapping("/addToCart/{id}/{quantity}")
-    public String addToCart(@PathVariable("id") UUID id, @PathVariable("quantity") Integer quantity) {
+    public String addToCart(@PathVariable UUID id, @PathVariable Integer quantity) {
 
         cartService.addToCart(id, quantity);
 
