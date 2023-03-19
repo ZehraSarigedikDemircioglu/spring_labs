@@ -84,5 +84,6 @@ public class CartServiceImpl implements CartService {
 
         cart2.setCartTotalAmount(cart2TotalAmount);
         CART_LIST.add(cart2);
+
     }
 }
