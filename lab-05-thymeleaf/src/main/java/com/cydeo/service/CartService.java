@@ -8,4 +8,5 @@ public interface CartService {
 
     Cart addToCart(UUID productId, Integer quantity);
     boolean deleteFromCart(UUID productId);
+
 }
