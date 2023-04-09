@@ -3,11 +3,9 @@ package com.cydeo.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,4 +18,12 @@ public class Product {
     private BigDecimal price;
     private Integer quantity;
     private Integer remainingQuantity;
+    @OneToMany
+    private List<CartItem> cartItemList;
+
+    public Product(BigDecimal price, Integer quantity, Integer remainingQuantity) {
+        this.price = price;
+        this.quantity = quantity;
+        this.remainingQuantity = remainingQuantity;
+    }
 }
