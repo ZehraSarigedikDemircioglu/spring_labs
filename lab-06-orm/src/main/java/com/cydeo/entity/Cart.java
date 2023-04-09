@@ -19,7 +19,15 @@ public class Cart {
     @Enumerated(EnumType.STRING)
     private CartState cartState;
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
     @ManyToOne
+    @JoinColumn(name = "discount_id")
     private Discount discount;
+    @OneToOne(mappedBy = "cart")
+    private Orders orders;
+
+    public Cart(CartState cartState) {
+        this.cartState = cartState;
+    }
 }

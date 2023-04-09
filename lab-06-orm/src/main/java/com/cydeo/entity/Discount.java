@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -21,5 +22,12 @@ public class Discount {
     @Enumerated(EnumType.STRING)
     private DiscountType discountType;
     private String name;
+    @OneToMany
+    private List<Cart> cartList;
 
+    public Discount(BigDecimal discount, DiscountType discountType, String name) {
+        this.discount = discount;
+        this.discountType = discountType;
+        this.name = name;
+    }
 }
