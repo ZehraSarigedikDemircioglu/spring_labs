@@ -1,7 +1,9 @@
 package com.cydeo.entity;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -9,11 +11,9 @@ import java.math.BigDecimal;
 
 @Entity
 @NoArgsConstructor
-@Data
-public class Orders {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Getter
+@Setter
+public class Orders extends BaseEntity{
     private BigDecimal paidPrice;
     private BigDecimal totalPrice;
     @ManyToOne
@@ -23,8 +23,4 @@ public class Orders {
     @OneToOne
     private Payment payment;
 
-    public Orders(BigDecimal paidPrice, BigDecimal totalPrice) {
-        this.paidPrice = paidPrice;
-        this.totalPrice = totalPrice;
-    }
 }
