@@ -3,10 +3,7 @@ package com.cydeo.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigInteger;
 
 @Entity
@@ -20,7 +17,13 @@ public class Address {
     private String name;
     private String street;
     private String zipCode;
-    private BigInteger customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-
+    public Address(String name, String street, String zipCode) {
+        this.name = name;
+        this.street = street;
+        this.zipCode = zipCode;
+    }
 }
