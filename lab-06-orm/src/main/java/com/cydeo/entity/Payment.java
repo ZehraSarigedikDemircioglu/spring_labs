@@ -20,4 +20,9 @@ public class Payment {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
+    public Payment(BigDecimal paidPrice, PaymentMethod paymentMethod) {
+        this.paidPrice = paidPrice;
+        this.paymentMethod = paymentMethod;
+    }
 }
