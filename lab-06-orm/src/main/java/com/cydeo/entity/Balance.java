@@ -11,11 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Balance {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Balance extends BaseEntity{
     private BigDecimal amount;
     @OneToOne // unidirection
     private Customer customer;
