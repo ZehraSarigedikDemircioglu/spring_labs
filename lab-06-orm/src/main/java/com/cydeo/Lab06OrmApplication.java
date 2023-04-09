@@ -1,4 +1,4 @@
-package com.cydeo.lab06orm;
+package com.cydeo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
