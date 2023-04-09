@@ -1,15 +1,15 @@
 package com.cydeo.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
-import java.math.BigInteger;
 
 @Entity
 @NoArgsConstructor
-@Data
-
+@Getter
+@Setter
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +18,5 @@ public class Address {
     private String street;
     private String zipCode;
     @ManyToOne
-    @JoinColumn(name = "customer_id")
     private Customer customer;
-
-    public Address(String name, String street, String zipCode) {
-        this.name = name;
-        this.street = street;
-        this.zipCode = zipCode;
-    }
 }
