@@ -1,6 +1,5 @@
 package com.cydeo.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,8 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Orders extends BaseEntity{
+@Table(name = "orders")
+public class Order extends BaseEntity{
     private BigDecimal paidPrice;
     private BigDecimal totalPrice;
     @ManyToOne
