@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Setter
 public class Balance extends BaseEntity{
     private BigDecimal amount;
-    @OneToOne // unidirection
+    @OneToOne(fetch = FetchType.LAZY) // unidirection
     private Customer customer;
 
 }
