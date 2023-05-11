@@ -1,6 +1,6 @@
 package com.cydeo.lab07ormqueries.entity;
 
-import com.cydeo.enums.CartState;
+import com.cydeo.lab07ormqueries.enums.CartState;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
