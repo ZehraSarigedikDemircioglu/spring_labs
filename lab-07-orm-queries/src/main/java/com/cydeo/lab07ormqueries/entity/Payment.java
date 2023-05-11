@@ -1,6 +1,6 @@
 package com.cydeo.lab07ormqueries.entity;
 
-import com.cydeo.enums.PaymentMethod;
+import com.cydeo.lab07ormqueries.enums.PaymentMethod;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
