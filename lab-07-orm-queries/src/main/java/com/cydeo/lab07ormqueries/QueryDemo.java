@@ -30,6 +30,6 @@ public class QueryDemo implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        System.out.println(addressRepository.findByName("name"));
+        System.out.println(addressRepository.findAllByStreetStartingWith("S"));
     }
 }
