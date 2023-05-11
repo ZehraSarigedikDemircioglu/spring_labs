@@ -4,6 +4,7 @@ import com.cydeo.lab07ormqueries.enums.CartState;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Cart extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
