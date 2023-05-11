@@ -1,6 +1,6 @@
 package com.cydeo.lab07ormqueries.entity;
 
-import com.cydeo.enums.DiscountType;
+import com.cydeo.lab07ormqueries.enums.DiscountType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
