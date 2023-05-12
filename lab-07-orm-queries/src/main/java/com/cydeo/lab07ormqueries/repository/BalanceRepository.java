@@ -3,6 +3,7 @@ package com.cydeo.lab07ormqueries.repository;
 import com.cydeo.lab07ormqueries.entity.Balance;
 import com.cydeo.lab07ormqueries.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -18,6 +19,8 @@ public interface BalanceRepository extends JpaRepository<Balance, Long> {
     Balance getByCustomer_Id(Long id);
 
     //Write a native query to get top 5 max balance
+    @Query(value = "select * from balance order by amount desc limit 5", nativeQuery = true)
+    List<Balance> getTop5MaxAmount();
 
     //Write a derived query to get all balances greater than or equal specific balance amount
     List<Balance> getAllByAmountGreaterThanEqual(BigDecimal amount);
