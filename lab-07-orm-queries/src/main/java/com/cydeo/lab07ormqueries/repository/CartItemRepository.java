@@ -8,7 +8,11 @@ import org.springframework.stereotype.Repository;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     //Write a derived query to get count cart items
+
+    Integer countCartItemBy();
+
     //Write a derived query to get cart items for specific cart state
+
     //Write a native query to get cart items for specific cart state and product name
     //Write a native query to get cart items for specific cart state and without discount
     //Write a native query to get cart items for specific cart state and with specific Discount type
