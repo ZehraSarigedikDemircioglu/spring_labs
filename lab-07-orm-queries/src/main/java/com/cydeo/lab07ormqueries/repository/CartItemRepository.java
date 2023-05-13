@@ -20,11 +20,11 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
     List<CartItem> findAllByCart_CartState(CartState cartState);
 
     //Write a native query to get cart items for specific cart state and product name
-    @Query(value = "select * from cart_item cijoin c on ci.cart_id = c.id join p on ci.product_id =p.id where c.cart_state =?1", nativeQuery = true)
+    @Query(value = "select * from cart_item ci join c on ci.cart_id = c.id join p on ci.product_id =p.id where c.cart_state =?1", nativeQuery = true)
     List<CartItem> retrieveAllCartItemByCartStateAndProductName(@Param("cartState") String cartState, @Param("name") String name);
 
     //Write a native query to get cart items for specific cart state and without discount
-    @Query(value = "select * from cart_item ci join cart c on  ci.cart_id = c.id where c.cart_state=?1 and c.discount_id is null", nativeQuery=true)
+    @Query(value = "select * from cart_item ci join cart c on ci.cart_id = c.id where c.cart_state = ?1 and c.discount_id is null", nativeQuery=true)
     List<CartItem> retrieveCartItemsByCartStateWithoutDiscount(@Param("cartState") String cartState);
 
     //Write a native query to get cart items for specific cart state and with specific Discount type
