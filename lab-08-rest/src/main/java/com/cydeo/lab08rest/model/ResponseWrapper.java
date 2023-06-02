@@ -29,4 +29,9 @@ public class ResponseWrapper {
         this.code = httpStatus.value();
         this.success = true;
     }
+
+    public ResponseWrapper(String message, Object data) {
+        this.message = message;
+        this.data = data;
+    }
 }
