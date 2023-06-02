@@ -3,7 +3,6 @@ package com.cydeo.lab08rest.controller;
 import com.cydeo.lab08rest.dto.AddressDTO;
 import com.cydeo.lab08rest.model.ResponseWrapper;
 import com.cydeo.lab08rest.service.AddressService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
