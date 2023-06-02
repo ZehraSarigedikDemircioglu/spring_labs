@@ -1,14 +1,11 @@
 package com.cydeo.lab08rest.controller;
 
 import com.cydeo.lab08rest.dto.AddressDTO;
-import com.cydeo.lab08rest.dto.ResponseWrapper;
-import com.cydeo.lab08rest.entity.Address;
+import com.cydeo.lab08rest.model.ResponseWrapper;
 import com.cydeo.lab08rest.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -21,27 +18,42 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    //    @GetMapping
-//    public List<AddressDTO> getAllAddresses(){
-//        return addressService.getAllCourses();
-//    }
     @GetMapping
-    public ResponseEntity<ResponseWrapper> getAllCourses() {
+    public ResponseEntity<ResponseWrapper> getAllAddresses() {
 
         return ResponseEntity
-//                .status(HttpStatus.ACCEPTED)
-                .ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAllCourses()));
-//                .header("Version", "Cydeo.V3")
-//                .body(new ResponseWrapper("Address are successfully retrieved", addressService.getAllCourses()));
+                .ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAllAddress()));
     }
 
-    @GetMapping("/customer/{id}")
-    public ResponseEntity<ResponseWrapper> getCourseById(@PathVariable("id") long customerId) {
-        return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAddressById(customerId)));
+    //    @PutMapping
+//    public ResponseEntity<Void> updateAddressById(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO) {
+//        addressService.updateAddress(addressDTO);
+//        return ResponseEntity.status(HttpStatus.OK).build();
+//    }
+    @PutMapping
+    public AddressDTO updateAddressById(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO) {
+        return addressService.updateAddress(addressDTO);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseWrapper> createCourse() {
-        return ResponseEntity.created(new ResponseWrapper("Address is created"), addressService.createAddress());
+    public AddressDTO createAddress(@RequestBody AddressDTO addressDTO) {
+        return addressService.createAddress(addressDTO);
     }
+
+    @GetMapping("/startsWith/{address}")
+    public ResponseEntity<ResponseWrapper> getAddressByStartsWith(@PathVariable("address") String pattern) {
+        return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAddressStartsWith(pattern)));
+    }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<ResponseWrapper> getAddressByCustomerId(@PathVariable("id") long customerId) {
+        return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAddressByCustomerId(customerId)));
+    }
+
+    @GetMapping("/customer/{customerId}/name/{name}")
+    public ResponseEntity<ResponseWrapper> getAddressByCustomerId(@PathVariable("customerId") long customerId, @PathVariable("name") String name) {
+        return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAddressByCustomerIdAndName(customerId, name)));
+    }
+
+
 }
