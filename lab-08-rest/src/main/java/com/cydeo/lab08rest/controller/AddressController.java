@@ -18,7 +18,7 @@ public class AddressController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseWrapper> getAllAddresses() {
+    public ResponseEntity<ResponseWrapper> getAddressList() {
 
         return ResponseEntity
                 .ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAllAddress()));
@@ -30,7 +30,7 @@ public class AddressController {
 //        return ResponseEntity.status(HttpStatus.OK).build();
 //    }
     @PutMapping
-    public AddressDTO updateAddressById(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO) {
+    public AddressDTO updateAddress(@PathVariable("id") Long id, @RequestBody AddressDTO addressDTO) {
         return addressService.updateAddress(addressDTO);
     }
 
@@ -40,17 +40,17 @@ public class AddressController {
     }
 
     @GetMapping("/startsWith/{address}")
-    public ResponseEntity<ResponseWrapper> getAddressByStartsWith(@PathVariable("address") String pattern) {
+    public ResponseEntity<ResponseWrapper> getAddressListByStartsWithAddress(@PathVariable("address") String pattern) {
         return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAddressStartsWith(pattern)));
     }
 
     @GetMapping("/customer/{id}")
-    public ResponseEntity<ResponseWrapper> getAddressByCustomerId(@PathVariable("id") long customerId) {
+    public ResponseEntity<ResponseWrapper> getAddressListByCustomerId(@PathVariable("id") long customerId) {
         return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAddressByCustomerId(customerId)));
     }
 
     @GetMapping("/customer/{customerId}/name/{name}")
-    public ResponseEntity<ResponseWrapper> getAddressByCustomerId(@PathVariable("customerId") long customerId, @PathVariable("name") String name) {
+    public ResponseEntity<ResponseWrapper> getAddressListByCustomerAndName(@PathVariable("customerId") long customerId, @PathVariable("name") String name) {
         return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved", addressService.getAddressByCustomerIdAndName(customerId, name)));
     }
 
