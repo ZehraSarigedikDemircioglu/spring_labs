@@ -6,6 +6,7 @@ import com.cydeo.lab08rest.entity.Customer;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.AddressRepository;
 import com.cydeo.lab08rest.service.AddressService;
+import com.cydeo.lab08rest.service.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
