@@ -8,7 +8,7 @@ public interface AddressService {
 
     List<AddressDTO> getAllAddress();
 
-    AddressDTO getAddressByCustomerId(long customerId);
+    List<AddressDTO> getAddressByCustomerId(long customerId);
 
     AddressDTO createAddress(AddressDTO address);
 
