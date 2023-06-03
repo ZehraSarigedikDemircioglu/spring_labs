@@ -15,10 +15,12 @@ public class AddressServiceImpl implements AddressService {
 
     private final AddressRepository addressRepository;
     private final MapperUtil mapperUtil;
+    private final CustomerService customerService;
 
-    public AddressServiceImpl(AddressRepository addressRepository, MapperUtil mapperUtil) {
+    public AddressServiceImpl(AddressRepository addressRepository, MapperUtil mapperUtil, CustomerService customerService) {
         this.addressRepository = addressRepository;
         this.mapperUtil = mapperUtil;
+        this.customerService = customerService;
     }
 
     @Override
@@ -28,9 +30,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDTO getAddressByCustomerId(long customerId) {
-        Address address = addressRepository.findById(customerId).get();
-        return mapperUtil.convert(address, new AddressDTO());
+    public List<AddressDTO> getAddressByCustomerId(long customerId) {
+        return addressRepository.findById(customerId).stream().map(add -> mapperUtil.convert(add, new AddressDTO())).collect(Collectors.toList());
     }
 
     @Override
@@ -42,13 +43,11 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO updateAddress(AddressDTO addressDTO) {
 
-        addressRepository.findById(addressDTO.getId()).orElseThrow();
-
-        Address addressToSave = mapperUtil.convert(addressDTO, new Address());
-
-        addressRepository.save(addressToSave);
-
-        return mapperUtil.convert(addressToSave, new AddressDTO());
+        Address addressToUpdate = mapperUtil.convert(addressDTO, new Address());
+        Customer customer = mapperUtil.convert(customerService.findById(addressDTO.getCustomerId()), new Customer());
+        addressToUpdate.setCustomer(customer);
+        addressRepository.save(addressToUpdate);
+        return addressDTO;
     }
 
     @Override
