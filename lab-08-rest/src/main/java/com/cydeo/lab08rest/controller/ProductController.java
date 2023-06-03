@@ -4,6 +4,7 @@ import com.cydeo.lab08rest.dto.AddressDTO;
 import com.cydeo.lab08rest.dto.ProductDTO;
 import com.cydeo.lab08rest.model.ResponseWrapper;
 import com.cydeo.lab08rest.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,56 +24,56 @@ public class ProductController {
     public ResponseEntity<ResponseWrapper> getProductList() {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Products are successfully retrieved", productService.findAll()));
+                .ok(new ResponseWrapper("Products are successfully retrieved", productService.findAll(), HttpStatus.OK));
     }
 
     @PutMapping
-    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO) {
-
-        return productService.update(productDTO);
+    public ResponseEntity<ResponseWrapper> updateProduct(@RequestBody ProductDTO productDTO) {
+        productService.update(productDTO);
+        return ResponseEntity.ok(new ResponseWrapper("Product is successfully updated", productDTO, HttpStatus.OK));
     }
 
     @PostMapping
-    public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
-
-        return productService.create(productDTO);
+    public ResponseEntity<ResponseWrapper> createProduct(@RequestBody ProductDTO productDTO) {
+        productService.create(productDTO);
+        return ResponseEntity.ok(new ResponseWrapper("Product is successfully saved", productDTO, HttpStatus.OK));
     }
     @PostMapping("/categoryandprice")
     public ResponseEntity<ResponseWrapper> createProductByCategoryAndPrice(@RequestBody ProductDTO productDTO) {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Products are successfully retrieved", productService.createByCategoryAndPrice(productDTO)));
+                .ok(new ResponseWrapper("Products are successfully retrieved", productService.createByCategoryAndPrice(productDTO), HttpStatus.CREATED));
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<ResponseWrapper> getProductListByName(@PathVariable("name") String name) {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getProductName(name)));
+                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getProductName(name), HttpStatus.OK));
     }
     @GetMapping("/top3")
     public ResponseEntity<ResponseWrapper> getTop3ProductList() {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getTop3()));
+                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getTop3(), HttpStatus.OK));
     }
 
     @GetMapping("/price/{price}")
     public ResponseEntity<ResponseWrapper> getProductListByPrice(@PathVariable("price") BigDecimal price) {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getProductByPrice(price)));
+                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getProductByPrice(price), HttpStatus.OK));
     }
 
     @GetMapping("/price/{price}/quantity/{quantity}")
     public ResponseEntity<ResponseWrapper> getProductListByPriceAndQuantity(@PathVariable("price") BigDecimal price, @PathVariable("quantity") Integer quantity) {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getByPriceAndQuantity(price, quantity)));
+                .ok(new ResponseWrapper("Products are successfully retrieved", productService.getByPriceAndQuantity(price, quantity), HttpStatus.OK));
     }
 
     @GetMapping("/category/{id}")
     public ResponseEntity<ResponseWrapper> getProductListByCategory(@PathVariable("id") long id) {
-        return ResponseEntity.ok(new ResponseWrapper("Product retrieved", productService.getCategoryById(id)));
+        return ResponseEntity.ok(new ResponseWrapper("Product retrieved", productService.getCategoryById(id), HttpStatus.OK));
     }
 }
