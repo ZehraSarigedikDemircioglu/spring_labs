@@ -1,8 +1,6 @@
 package com.cydeo.lab08rest.service.impl;
 
-import com.cydeo.lab08rest.dto.AddressDTO;
 import com.cydeo.lab08rest.dto.ProductDTO;
-import com.cydeo.lab08rest.entity.Address;
 import com.cydeo.lab08rest.entity.Product;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.ProductRepository;
@@ -28,47 +26,58 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> findAll() {
         return productRepository.findAll()
                 .stream()
-                .map(student -> mapperUtil.convert(student, new ProductDTO()))
+                .map(product -> mapperUtil.convert(product, new ProductDTO()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public ProductDTO update(ProductDTO productDTO) {
-        return null;
+        Product product = productRepository.save(mapperUtil.convert(productDTO, new Product()));
+        return mapperUtil.convert(product, new ProductDTO());
     }
 
     @Override
     public ProductDTO create(ProductDTO productDTO) {
-        return null;
+        Product product = productRepository.save(mapperUtil.convert(productDTO, new Product()));
+        return mapperUtil.convert(product, new ProductDTO());
     }
 
     @Override
-    public ProductDTO createByCategoryAndPrice(ProductDTO productDTO) {
-        return null;
+    public List<ProductDTO> createByCategoryAndPrice(List<Long> categoryList, BigDecimal price) {
+        List<Product> productList = productRepository.retrieveProductListByCategory(categoryList, price);
+        return productList.stream()
+                .map(product -> mapperUtil.convert(product, new ProductDTO()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public ProductDTO getProductName(String name) {
-        return null;
+        return mapperUtil.convert(productRepository.findFirstByName(name), new ProductDTO());
     }
 
     @Override
     public List<ProductDTO> getTop3() {
-        return null;
+        return productRepository.findTop3ByOrderByPriceDesc().stream()
+                .map(product -> mapperUtil.convert(product, new ProductDTO()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public ProductDTO getProductByPrice(BigDecimal price) {
-        return null;
+    public Integer getProductByPrice(BigDecimal price) {
+        return productRepository.countProductByPriceGreaterThan(price);
     }
 
     @Override
-    public ProductDTO getByPriceAndQuantity(BigDecimal price, Integer quantity) {
-        return null;
+    public List<ProductDTO> getByPriceAndQuantity(BigDecimal price, Integer quantity) {
+        return productRepository.retrieveProductListGreaterThanPriceAndLowerThanRemainingQuantity(price, quantity).stream()
+                .map(product -> mapperUtil.convert(product, new ProductDTO()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public ProductDTO getCategoryById(Long id) {
-        return null;
+    public List<ProductDTO> getByCategory(long id) {
+        return productRepository.retrieveProductListByCategory(id).stream()
+                .map(product -> mapperUtil.convert(product, new ProductDTO()))
+                .collect(Collectors.toList());
     }
 }

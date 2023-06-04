@@ -2,6 +2,7 @@ package com.cydeo.lab08rest.controller;
 
 import com.cydeo.lab08rest.dto.AddressDTO;
 import com.cydeo.lab08rest.dto.ProductDTO;
+import com.cydeo.lab08rest.dto.ProductRequest;
 import com.cydeo.lab08rest.model.ResponseWrapper;
 import com.cydeo.lab08rest.service.ProductService;
 import org.springframework.http.HttpStatus;
@@ -29,20 +30,18 @@ public class ProductController {
 
     @PutMapping
     public ResponseEntity<ResponseWrapper> updateProduct(@RequestBody ProductDTO productDTO) {
-        productService.update(productDTO);
-        return ResponseEntity.ok(new ResponseWrapper("Product is successfully updated", productDTO, HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Product is successfully updated", productService.update(productDTO), HttpStatus.OK));
     }
 
     @PostMapping
     public ResponseEntity<ResponseWrapper> createProduct(@RequestBody ProductDTO productDTO) {
-        productService.create(productDTO);
-        return ResponseEntity.ok(new ResponseWrapper("Product is successfully saved", productDTO, HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Product is successfully saved", productService.create(productDTO), HttpStatus.OK));
     }
     @PostMapping("/categoryandprice")
-    public ResponseEntity<ResponseWrapper> createProductByCategoryAndPrice(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ResponseWrapper> createProductByCategoryAndPrice(@RequestBody ProductRequest productRequest) {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Products are successfully retrieved", productService.createByCategoryAndPrice(productDTO), HttpStatus.CREATED));
+                .ok(new ResponseWrapper("Products are successfully retrieved", productService.createByCategoryAndPrice(productRequest.getCategoryList(), productRequest.getPrice()), HttpStatus.OK));
     }
 
     @GetMapping("/{name}")
@@ -74,6 +73,6 @@ public class ProductController {
 
     @GetMapping("/category/{id}")
     public ResponseEntity<ResponseWrapper> getProductListByCategory(@PathVariable("id") long id) {
-        return ResponseEntity.ok(new ResponseWrapper("Product retrieved", productService.getCategoryById(id), HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Product retrieved", productService.getByCategory(id), HttpStatus.OK));
     }
 }

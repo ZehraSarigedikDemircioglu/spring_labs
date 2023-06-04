@@ -11,11 +11,11 @@ public interface ProductService {
     ProductDTO update(ProductDTO productDTO);
 
     ProductDTO create(ProductDTO productDTO);
-    ProductDTO createByCategoryAndPrice(ProductDTO productDTO);
+    List<ProductDTO> createByCategoryAndPrice(List<Long> categoryList, BigDecimal price);
 
     ProductDTO getProductName(String name);
     List<ProductDTO> getTop3();
-    ProductDTO getProductByPrice(BigDecimal price);
-    ProductDTO getByPriceAndQuantity(BigDecimal price, Integer quantity);
-    ProductDTO getCategoryById( Long id);
+    Integer getProductByPrice(BigDecimal price);
+    List<ProductDTO> getByPriceAndQuantity(BigDecimal price, Integer quantity);
+    List<ProductDTO> getByCategory(long id);
 }
