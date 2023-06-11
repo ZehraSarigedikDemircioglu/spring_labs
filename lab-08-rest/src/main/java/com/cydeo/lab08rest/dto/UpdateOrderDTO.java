@@ -10,6 +10,9 @@ import java.math.BigDecimal;
 @Setter
 public class UpdateOrderDTO {
 
+    // For updating, we actually need only paidprice and totalprice since cartId, customerId, paymentId will be same.
+    // So, only focus on the changing fields
+
     // only updatable fields should be exist in DTO
 
     @NotNull(message = "price can not be null")
