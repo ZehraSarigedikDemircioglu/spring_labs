@@ -15,7 +15,6 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     // modifying Json output with different type of exception
-
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ExceptionWrapper> processNotFoundException(NotFoundException ex){
         //create a json body and return it
