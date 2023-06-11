@@ -10,4 +10,6 @@ public interface CustomerService {
     CustomerDTO createCustomer(CustomerDTO customerDTO);
     CustomerDTO getCustomerByEmail(String email);
     CustomerDTO findById(Long id);
+
+    boolean existById(Long customerId);
 }
