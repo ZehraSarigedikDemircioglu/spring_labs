@@ -1,33 +1,48 @@
 package com.cydeo.lab08rest.service.impl;
 
+import com.cydeo.lab08rest.client.CurrencyApiClient;
 import com.cydeo.lab08rest.dto.OrderDTO;
 import com.cydeo.lab08rest.dto.UpdateOrderDTO;
 import com.cydeo.lab08rest.entity.Order;
+import com.cydeo.lab08rest.enums.Currency;
 import com.cydeo.lab08rest.enums.PaymentMethod;
+import com.cydeo.lab08rest.exception.CurrencyNotFoundException;
 import com.cydeo.lab08rest.exception.NotFoundException;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.OrderRepository;
 import com.cydeo.lab08rest.service.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    @Value("${access_key}")
+    private String accessKey;
 
     private final OrderRepository orderRepository;
     private final MapperUtil mapperUtil;
     private final CustomerService customerService;
     private final CartService cartService;
     private final PaymentService paymentService;
+    private final CurrencyApiClient currencyApiClient;
 
-    public OrderServiceImpl(OrderRepository orderRepository, MapperUtil mapperUtil, CustomerService customerService, CartService cartService, PaymentService paymentService) {
+    public OrderServiceImpl(OrderRepository orderRepository, MapperUtil mapperUtil, CustomerService customerService, CartService cartService, PaymentService paymentService, CurrencyApiClient currencyApiClient) {
         this.orderRepository = orderRepository;
         this.mapperUtil = mapperUtil;
         this.customerService = customerService;
         this.cartService = cartService;
         this.paymentService = paymentService;
+        this.currencyApiClient = currencyApiClient;
     }
 
     @Override
@@ -115,5 +130,60 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("No changes detected");
         }
     }
+
+    @Override
+    public OrderDTO getOrderById(Long orderId, Optional<String> currency) {
+
+        //find the order based on id
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new NotFoundException("Order could not be found."));
+
+        //if we are getting currency value from the user
+        currency.ifPresent(curr -> {
+            // check that if user currency input is valid(inside the our currencies list)
+            validateCurrency(curr);
+            //get the currency data based on currency type
+            BigDecimal currencyRate = getCurrencyRate(curr);
+            //do calculations and set new paidPrice and totalPrice
+            //these prices for just to give value to customer, we will not update the db based on other currencies
+            BigDecimal newPaidPrice = order.getPaidPrice().multiply(currencyRate).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal newTotalPrice = order.getTotalPrice().multiply(currencyRate).setScale(2, RoundingMode.HALF_UP);
+            //set the value to order that we retrieved
+            order.setPaidPrice(newPaidPrice);
+            order.setTotalPrice(newTotalPrice);
+        });
+
+        //convert and return it
+        return mapperUtil.convert(order,new OrderDTO());
+    }
+
+    private void validateCurrency(String curr) {
+        // check if the currency is valid currency
+        List<String> currencies = Stream.of(Currency.values())
+                .map(currency -> currency.value)
+                .collect(Collectors.toList());
+        boolean isCurrencyValid = currencies.contains(curr);
+        if(!isCurrencyValid){
+            throw new CurrencyNotFoundException("Currency type for" + curr + " could not be found");
+        }
+    }
+
+    private BigDecimal getCurrencyRate(String currency) {
+        //consume the api
+        //we save response inside the quotes map
+        Map<String, Double> quotes = currencyApiClient.retrieveCurrency(accessKey, currency, "USD", 1).getQuotes();
+//        Map<String, Double> quotes = (Map<String, Double>) currencyApiClient.retrieveCurrency(accessKey, currency, "USD", 1).get("quotes");
+//        Boolean isSuccess = (Boolean) currencyApiClient.retrieveCurrency(accessKey, currency, "USD", 1).get("success");
+        // If we use in general Object for the return type in method in CurrencyApiClient, we just need to cast. This is another approach.
+//        if(!isSuccess) {
+//            throw new RuntimeException("API is down");
+//        }
+        // check if success is true, then retrieve
+        String expectedCurrency = "USD"+currency.toUpperCase();
+        BigDecimal currencyRate = BigDecimal.valueOf(quotes.get(expectedCurrency));
+        // check if currencyRate is valid
+        return currencyRate;
+    }
+
 
 }
