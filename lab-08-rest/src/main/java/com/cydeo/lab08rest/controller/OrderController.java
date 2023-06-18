@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -25,35 +26,53 @@ public class OrderController {
     public ResponseEntity<ResponseWrapper> getOrderList() {
 
         return ResponseEntity
-                .ok(new ResponseWrapper("Orders are successfully retrieved", orderService.getAllOrders(), HttpStatus.OK));
+                .ok(new ResponseWrapper("Orders are successfully retrieved",
+                        orderService.getAllOrders(), HttpStatus.OK));
+    }
+    @GetMapping("/{orderId}")
+    public ResponseEntity<ResponseWrapper> getOrder(@PathVariable("orderId") Long orderId,
+                                                    @RequestParam(required = false) Optional<String> currency) {
+
+        return ResponseEntity
+                .ok(new ResponseWrapper("Order is successfully retrieved",
+                        orderService.getOrderById(orderId, currency), HttpStatus.OK));
     }
 
     @PutMapping
     public ResponseEntity<ResponseWrapper> updateOrder(@Valid @RequestBody OrderDTO orderDTO) {
         orderService.updateOrder(orderDTO);
-        return ResponseEntity.ok(new ResponseWrapper("Order is successfully updated", orderDTO, HttpStatus.CREATED));
+        return ResponseEntity.ok(
+                new ResponseWrapper("Order is successfully updated", orderDTO, HttpStatus.CREATED));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseWrapper> updateOrderById(@PathVariable("id") Long id, @Valid @RequestBody UpdateOrderDTO updateOrderDTO) {
+    public ResponseEntity<ResponseWrapper> updateOrderById(@PathVariable("id") Long id,
+                                                           @Valid @RequestBody UpdateOrderDTO updateOrderDTO) {
 
-        return ResponseEntity.ok(new ResponseWrapper("Order is successfully updated", orderService.updateOrderById(id, updateOrderDTO), HttpStatus.OK));
+        return ResponseEntity.ok(
+                new ResponseWrapper("Order is successfully updated",
+                        orderService.updateOrderById(id, updateOrderDTO), HttpStatus.OK));
     }
 
     @PostMapping
     public ResponseEntity<ResponseWrapper> createOrder(@RequestBody OrderDTO orderDTO) {
         orderService.createOrder(orderDTO);
-        return ResponseEntity.ok(new ResponseWrapper("Order is successfully created", orderDTO, HttpStatus.CREATED));
+        return ResponseEntity.ok(
+                new ResponseWrapper("Order is successfully created", orderDTO, HttpStatus.CREATED));
     }
 
     @GetMapping("/paymentMethod/{paymentMethod}")
-    public ResponseEntity<ResponseWrapper> getOrderByPaymentMethod(@PathVariable("paymentMethod") PaymentMethod paymentMethod) {
-        return ResponseEntity.ok(new ResponseWrapper("Payment method is successfully retrieved", orderService.getOrderByPaymentMethod(paymentMethod), HttpStatus.OK));
+    public ResponseEntity<ResponseWrapper> getOrderByPaymentMethod(
+            @PathVariable("paymentMethod") PaymentMethod paymentMethod) {
+        return ResponseEntity.ok(
+                new ResponseWrapper("Payment method is successfully retrieved",
+                        orderService.getOrderByPaymentMethod(paymentMethod), HttpStatus.OK));
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<ResponseWrapper> getOrderByEmail(@PathVariable("email") String email) {
-        return ResponseEntity.ok(new ResponseWrapper("Order is successfully retrieved", orderService.getOrderByEmail(email), HttpStatus.OK));
+        return ResponseEntity.ok(new ResponseWrapper("Order is successfully retrieved",
+                orderService.getOrderByEmail(email), HttpStatus.OK));
     }
 
 }
