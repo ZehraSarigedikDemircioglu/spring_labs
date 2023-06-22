@@ -24,7 +24,6 @@ public interface OrderService {
 
     OrderDTO getOrderById(Long orderId, Optional<String> currency);
 
-    // let's assume if you pay with creadit card we deduct $10 during the campaign period
+    // let's assume if you pay with credit card we deduct $10 during the campaign period
     BigDecimal placeOrder(PaymentMethod paymentMethod, Long cartId, Long customerId);
-
 }
