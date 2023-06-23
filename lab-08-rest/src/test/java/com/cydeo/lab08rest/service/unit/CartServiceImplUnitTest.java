@@ -179,7 +179,7 @@ public class CartServiceImplUnitTest {
         Throwable throwable = catchThrowable(() ->
                 cartService.applyDiscountToCartIfApplicableAndCalculateDiscountAmount("discount", new Cart()));
         assertThat(throwable).isInstanceOf(RuntimeException.class);
-        assertThat(throwable).hasMessage("Discount couldn't find ");
+        assertThat(throwable).hasMessage("Discount couldn't find");
     }
 
     @Test
@@ -191,7 +191,7 @@ public class CartServiceImplUnitTest {
         Throwable throwable = catchThrowable(() ->
                 cartService.applyDiscountToCartIfApplicableAndCalculateDiscountAmount("discount", new Cart()));
         assertThat(throwable).isInstanceOf(RuntimeException.class);
-        assertThat(throwable).hasMessage("Discount amount can not be null ");
+        assertThat(throwable).hasMessage("Discount amount can not be null");
     }
 
     // homework
