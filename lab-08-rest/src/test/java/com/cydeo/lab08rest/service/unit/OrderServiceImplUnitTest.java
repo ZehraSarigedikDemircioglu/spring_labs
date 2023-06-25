@@ -49,6 +49,7 @@ public class OrderServiceImplUnitTest {
         Throwable throwable = catchThrowable(() ->
                 orderService.placeOrder(PaymentMethod.TRANSFER,134L,1L));
         assertThat(throwable).isInstanceOf(RuntimeException.class);
+        assertThat(throwable).hasMessage("Customer couldn't find");
     }
 
     @Test
@@ -62,6 +63,7 @@ public class OrderServiceImplUnitTest {
         Throwable throwable = catchThrowable(() ->
                 orderService.placeOrder(PaymentMethod.TRANSFER,134L,customer.getId()));
         assertThat(throwable).isInstanceOf(RuntimeException.class);
+        assertThat(throwable).hasMessage("Cart couldn't find or cart is empty");
     }
 
     @Test
@@ -75,6 +77,7 @@ public class OrderServiceImplUnitTest {
         Throwable throwable = catchThrowable(() ->
                 orderService.placeOrder(PaymentMethod.TRANSFER,134L,customer.getId()));
         assertThat(throwable).isInstanceOf(RuntimeException.class);
+        assertThat(throwable).hasMessage("Cart couldn't find or cart is empty");
     }
 
     @Test
@@ -142,7 +145,7 @@ public class OrderServiceImplUnitTest {
                 (cart.getDiscount().getName(),cart)).thenReturn(BigDecimal.TEN);
 
         BigDecimal result = orderService.placeOrder(PaymentMethod.TRANSFER, cart.getId(),customer.getId());
-        assertThat(result).isEqualTo(BigDecimal.valueOf(10));
+        assertThat(result).isEqualTo(BigDecimal.valueOf(10)); // line 110 it is $20, and we assume discount is $10 => $20 - $10 = $10
         assertThat(product.getRemainingQuantity()).isEqualTo(56);
     }
     @Test
@@ -176,7 +179,10 @@ public class OrderServiceImplUnitTest {
         when(cartRepository.findAllByCustomerIdAndCartState(customer.getId(), CartState.CREATED)).thenReturn(cartList);
         when(cartItemRepository.findAllByCart(cart)).thenReturn(cartItemList);
         when(cartService.applyDiscountToCartIfApplicableAndCalculateDiscountAmount
-                (cart.getDiscount().getName(),cart)).thenReturn(BigDecimal.valueOf(15));
+                (cart.getDiscount().getName(),cart)).thenReturn(BigDecimal.valueOf(15)); // assume discount is $15
+        // quantity is 10, price is $5 => total cart $50
+        // discount is $15 => total amount is $35
+        // reward amount (orderservice impl line 203) is $10 => after payment discount $35 - $10 = $25
 
         BigDecimal result = orderService.placeOrder(PaymentMethod.CREDIT_CARD, cart.getId(),customer.getId());
         assertThat(result).isEqualTo(BigDecimal.valueOf(25));
