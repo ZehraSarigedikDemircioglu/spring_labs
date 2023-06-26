@@ -95,5 +95,4 @@ public class OrderServiceImplIntegrationTest {
         assertThat(throwable).isInstanceOf(RuntimeException.class);
         assertThat(throwable).hasMessage("Cart couldn't find or cart is empty");
     }
-
 }
