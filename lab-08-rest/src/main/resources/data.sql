@@ -1,5 +1,5 @@
-INSERT INTO public.discount (discount, discount_type, name) VALUES (25.00, 'RATE_BASED', '%25');
-INSERT INTO public.discount ( discount, discount_type, name) VALUES (50.00, 'AMOUNT_BASED', '50 dollar');
+INSERT INTO public.discount (discount, discount_type, name, minimum_amount) VALUES (25.00, 'RATE_BASED', '%25', 150.00);
+INSERT INTO public.discount (discount, discount_type, name, minimum_amount) VALUES (50.00, 'AMOUNT_BASED', '50 dollar', 250.00);
 INSERT INTO public.category ( name) VALUES ('Termite Control');
 INSERT INTO public.category ( name) VALUES ('Drywall & Acoustical (FED)');
 INSERT INTO public.category ( name) VALUES ('Plumbing & Medical Gas');
