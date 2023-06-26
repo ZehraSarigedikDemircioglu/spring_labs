@@ -75,4 +75,16 @@ public class ProductController {
     public ResponseEntity<ResponseWrapper> getProductListByCategory(@PathVariable("id") long id) {
         return ResponseEntity.ok(new ResponseWrapper("Product retrieved", productService.getByCategory(id), HttpStatus.OK));
     }
+
+    // you can call this method on postman with below url
+    // localhost:8080/api/v1/product/byPagination?pageNo=1&pageSize=5&sortBy=price&sortDir=desc
+    @GetMapping("/byPagination")
+    public ResponseEntity<ResponseWrapper> getProductListByPagination(
+            @RequestParam(value = "pageNo") int pageNo,
+            @RequestParam(value = "pageSize") int pageSize,
+            @RequestParam(value = "sortBy") String sortBy,
+            @RequestParam(value = "sortDir") String sortDir){
+        return ResponseEntity.ok(new ResponseWrapper("Products are successfully retrieved.",
+                productService.retrieveProductListByPagination(pageNo, pageSize,sortBy,sortDir), HttpStatus.OK));
+    }
 }
