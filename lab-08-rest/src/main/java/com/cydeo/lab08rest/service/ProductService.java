@@ -18,4 +18,5 @@ public interface ProductService {
     Integer getProductByPrice(BigDecimal price);
     List<ProductDTO> getByPriceAndQuantity(BigDecimal price, Integer quantity);
     List<ProductDTO> getByCategory(long id);
+    List<ProductDTO> retrieveProductListByPagination(int pageNo, int pageSize, String sortBy, String sortDir);
 }
