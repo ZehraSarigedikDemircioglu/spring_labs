@@ -75,4 +75,7 @@ public class OrderController {
                 orderService.getOrderByEmail(email), HttpStatus.OK));
     }
 
+    // placeOrder
+    // create a DTO(PlaceOrderDTO) class to have input parameters for placeOrder method inside the OrderService
+
 }
