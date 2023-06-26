@@ -77,7 +77,7 @@ public class CartServiceImplIntegrationTest {
     }
 
     @Test
-    public void should_apply_amount_based_iscount_to_the_cart_existing() {
+    public void should_apply_amount_based_discount_to_the_cart_existing() {
         Cart cart = cartRepository.findById(3L).get();
         BigDecimal result = cartService.applyDiscountToCartIfApplicableAndCalculateDiscountAmount("50 dollar", cart);
         assertNotNull(cart.getDiscount());
