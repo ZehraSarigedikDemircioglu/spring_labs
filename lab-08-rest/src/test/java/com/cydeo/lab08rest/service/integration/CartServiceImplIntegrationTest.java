@@ -10,7 +10,6 @@ import com.cydeo.lab08rest.repository.CartRepository;
 import com.cydeo.lab08rest.repository.CustomerRepository;
 import com.cydeo.lab08rest.repository.ProductRepository;
 import com.cydeo.lab08rest.service.CartService;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -104,7 +103,7 @@ public class CartServiceImplIntegrationTest {
         assertThat(cartList).hasSize(1);
         assertNull(cartList.get(0).getDiscount());
 
-        cartService.applyDiscountToCartIfApplicableAndCalculateDiscountAmount("50 dollar", cartList.get(0));
+        cartService.applyDiscountToCartIfApplicableAndCalculateDiscountAmount("50 dollar", cartList.get(0)); // cartList size is 1.
         assertNotNull(cartList.get(0).getDiscount());
     }
 
@@ -123,6 +122,5 @@ public class CartServiceImplIntegrationTest {
         cartService.applyDiscountToCartIfApplicableAndCalculateDiscountAmount("50 dollar", cartList.get(0));
         assertNull(cartList.get(0).getDiscount());
     }
-
 
 }
