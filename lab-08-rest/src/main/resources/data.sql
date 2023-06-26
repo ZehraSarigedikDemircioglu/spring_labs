@@ -7206,8 +7206,8 @@ INSERT INTO public.payment ( paid_price, payment_method) VALUES ( 651.55, 'TRANS
 INSERT INTO public.payment ( paid_price, payment_method) VALUES ( 315.44, 'TRANSFER');
 INSERT INTO public.payment ( paid_price, payment_method) VALUES ( 2453.89, 'TRANSFER');
 INSERT INTO public.payment ( paid_price, payment_method) VALUES ( 377.12, 'BUY_NOW_PAY_LATER');
-INSERT INTO public.orders ( paid_price, total_price, cart_id, customer_id, payment_id) VALUES ( 767.98, 1563.97, 739, 496, 1);
-INSERT INTO public.orders ( paid_price, total_price, cart_id, customer_id, payment_id) VALUES ( 1275.58, 267.14, 959, 198, 2);
+INSERT INTO public.orders ( paid_price, total_price, cart_id, customer_id, payment_id) VALUES ( 1563.97, 1563.97, 739, 496, 1);
+INSERT INTO public.orders ( paid_price, total_price, cart_id, customer_id, payment_id) VALUES ( 1275.58, 1275.58, 959, 198, 2);
 INSERT INTO public.orders ( paid_price, total_price, cart_id, customer_id, payment_id) VALUES ( 316.72, 171.37, 913, 113, 3);
 INSERT INTO public.orders ( paid_price, total_price, cart_id, customer_id, payment_id) VALUES ( 966.12, 836.18, 773, 230, 4);
 INSERT INTO public.orders ( paid_price, total_price, cart_id, customer_id, payment_id) VALUES ( 2071.68, 2662.16, 943, 249, 5);
