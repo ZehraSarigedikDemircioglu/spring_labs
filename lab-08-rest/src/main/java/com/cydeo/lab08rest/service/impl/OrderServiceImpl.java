@@ -111,7 +111,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDTO> getOrderByPaymentMethod(PaymentMethod paymentMethod) {
-        return null;
+        return orderRepository.findAllByPayment_PaymentMethod(paymentMethod).stream().
+                map(order -> mapperUtil.convert(order, new OrderDTO())).collect(Collectors.toList());
     }
 
     @Override
