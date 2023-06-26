@@ -5,6 +5,9 @@ import com.cydeo.lab08rest.entity.Product;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.ProductRepository;
 import com.cydeo.lab08rest.service.ProductService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -78,6 +81,19 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> getByCategory(long id) {
         return productRepository.retrieveProductListByCategory(id).stream()
                 .map(product -> mapperUtil.convert(product, new ProductDTO()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProductDTO> retrieveProductListByPagination(int pageNo, int pageSize, String sortBy, String sortDir) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        // create Pageable instance
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+
+        return productRepository.findAll(pageable).stream()
+                .map(product -> mapperUtil.convert(product,new ProductDTO()))
                 .collect(Collectors.toList());
     }
 }
