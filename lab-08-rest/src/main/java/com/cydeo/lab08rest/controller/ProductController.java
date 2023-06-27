@@ -87,5 +87,6 @@ public class ProductController {
             @RequestParam(value = "sortDir") String sortDir) {
         return ResponseEntity.ok(new ResponseWrapper("Products are successfully retrieved.",
                 productService.retrieveProductListByPagination(pageNo, pageSize, sortBy, sortDir), HttpStatus.OK));
+
     }
 }
