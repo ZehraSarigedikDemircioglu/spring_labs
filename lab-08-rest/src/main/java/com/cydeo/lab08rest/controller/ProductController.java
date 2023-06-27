@@ -37,6 +37,7 @@ public class ProductController {
     public ResponseEntity<ResponseWrapper> createProduct(@RequestBody ProductDTO productDTO) {
         return ResponseEntity.ok(new ResponseWrapper("Product is successfully saved", productService.create(productDTO), HttpStatus.OK));
     }
+
     @PostMapping("/categoryandprice")
     public ResponseEntity<ResponseWrapper> createProductByCategoryAndPrice(@RequestBody ProductRequest productRequest) {
 
@@ -50,6 +51,7 @@ public class ProductController {
         return ResponseEntity
                 .ok(new ResponseWrapper("Products are successfully retrieved", productService.getProductName(name), HttpStatus.OK));
     }
+
     @GetMapping("/top3")
     public ResponseEntity<ResponseWrapper> getTop3ProductList() {
 
@@ -83,8 +85,8 @@ public class ProductController {
             @RequestParam(value = "pageNo") int pageNo,
             @RequestParam(value = "pageSize") int pageSize,
             @RequestParam(value = "sortBy") String sortBy,
-            @RequestParam(value = "sortDir") String sortDir){
+            @RequestParam(value = "sortDir") String sortDir) {
         return ResponseEntity.ok(new ResponseWrapper("Products are successfully retrieved.",
-                productService.retrieveProductListByPagination(pageNo, pageSize,sortBy,sortDir), HttpStatus.OK));
+                productService.retrieveProductListByPagination(pageNo, pageSize, sortBy, sortDir), HttpStatus.OK));
     }
 }
