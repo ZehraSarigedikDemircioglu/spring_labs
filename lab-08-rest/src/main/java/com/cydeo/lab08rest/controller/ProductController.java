@@ -1,6 +1,5 @@
 package com.cydeo.lab08rest.controller;
 
-import com.cydeo.lab08rest.dto.AddressDTO;
 import com.cydeo.lab08rest.dto.ProductDTO;
 import com.cydeo.lab08rest.dto.ProductRequest;
 import com.cydeo.lab08rest.model.ResponseWrapper;
@@ -88,6 +87,5 @@ public class ProductController {
             @RequestParam(value = "sortDir") String sortDir) {
         return ResponseEntity.ok(new ResponseWrapper("Products are successfully retrieved.",
                 productService.retrieveProductListByPagination(pageNo, pageSize, sortBy, sortDir), HttpStatus.OK));
-
     }
 }
